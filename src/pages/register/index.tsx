@@ -3,6 +3,7 @@ import Input from "../../components/imput";
 import logoImg from "../../assets/logo.svg";
 
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { auth } from "../../services/firebaseConnection";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
@@ -10,6 +11,7 @@ import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { toast } from "react-hot-toast";
 
 const schema = z.object({
   name: z.string().nonempty('O campo nome é obrigatório'),
@@ -20,6 +22,8 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 
 export default function Register() {
+	const navigate = useNavigate();
+
   const { register, handleSubmit, reset, formState: { errors } } = useForm<FormData>({
     resolver: zodResolver(schema),
     mode: "onChange"
@@ -32,11 +36,13 @@ export default function Register() {
 				displayName: data.name
 			});
 
-			console.log('Cadastrado com sucesso')
+			toast.success('Cadastrado com sucesso');
+			navigate('/dashboard', { replace: true });
 			reset();
 		})
 		.catch((error) => {
 			console.log('Erro ao cadastrar usuário', error);
+			toast.error('Ocorreu um erro ao tentar cadastrar');
 		});
   };
 

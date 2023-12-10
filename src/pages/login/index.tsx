@@ -3,9 +3,11 @@ import Container from "../../components/container";
 import Input from "../../components/imput";
 
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { auth } from "../../services/firebaseConnection";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { toast } from "react-hot-toast";
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -19,6 +21,8 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>
 
 export default function Login() {
+  const navigate = useNavigate();
+
   const { register, handleSubmit, reset, formState: { errors } } = useForm<FormData>({
     resolver: zodResolver(schema),
     mode: "onChange"
@@ -27,7 +31,9 @@ export default function Login() {
   async function onSubmit(data: FormData){
     await signInWithEmailAndPassword(auth, data.email, data.password)
     .then(() => {
-      console.log('Cadastrado com sucesso');
+      navigate('/dashboard', { replace: true });
+      toast.success('Bem-vindo(a)');
+      reset();
     })
     .catch((error) => {
       console.log("Erro ao fazer login", error);
