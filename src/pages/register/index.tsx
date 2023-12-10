@@ -22,6 +22,11 @@ export default function Register() {
     mode: "onChange"
   });
 
+  function onSubmit(data: FormData){
+    console.log(data);
+    reset();
+  };
+
   return (
     <Container>
 			<div className="w-full justify-center items-center flex flex-col min-h-screen gap-4" >
@@ -33,7 +38,7 @@ export default function Register() {
 					/>
 				</Link>
 
-				<form className="bg-white max-w-xl w-full rounded-lg p-4">
+				<form className="bg-white max-w-xl w-full rounded-lg p-4" onSubmit={ handleSubmit(onSubmit) } >
 					<div className="mb-3" >
 						<Input
 							type='text'
