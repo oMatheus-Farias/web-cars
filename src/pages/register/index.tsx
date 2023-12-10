@@ -4,6 +4,9 @@ import logoImg from "../../assets/logo.svg";
 
 import { Link } from "react-router-dom";
 
+import { auth } from "../../services/firebaseConnection";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -22,9 +25,19 @@ export default function Register() {
     mode: "onChange"
   });
 
-  function onSubmit(data: FormData){
-    console.log(data);
-    reset();
+  async function onSubmit(data: FormData){
+    await createUserWithEmailAndPassword(auth, data.email, data.password)
+		.then(async (user) => {
+			await updateProfile(user.user, {
+				displayName: data.name
+			});
+
+			console.log('Cadastrado com sucesso')
+			reset();
+		})
+		.catch((error) => {
+			console.log('Erro ao cadastrar usuário', error);
+		});
   };
 
   return (
