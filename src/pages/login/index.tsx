@@ -4,6 +4,9 @@ import Input from "../../components/imput";
 
 import { Link } from "react-router-dom";
 
+import { auth } from "../../services/firebaseConnection";
+import { signInWithEmailAndPassword } from "firebase/auth";
+
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -21,9 +24,14 @@ export default function Login() {
     mode: "onChange"
   });
 
-  function onSubmit(data: FormData){
-    console.log(data);
-    reset();
+  async function onSubmit(data: FormData){
+    await signInWithEmailAndPassword(auth, data.email, data.password)
+    .then(() => {
+      console.log('Cadastrado com sucesso');
+    })
+    .catch((error) => {
+      console.log("Erro ao fazer login", error);
+    });
   };
 
   return (
