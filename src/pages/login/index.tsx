@@ -1,3 +1,6 @@
+import { useContext } from "react";
+import { AuthContext } from "../../contexts";
+
 import logoImg from "../../assets/logo.svg";
 import Container from "../../components/container";
 import Input from "../../components/imput";
@@ -21,6 +24,8 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>
 
 export default function Login() {
+	const { handleInfoUser } = useContext(AuthContext);
+
   const navigate = useNavigate();
 
   const { register, handleSubmit, reset, formState: { errors } } = useForm<FormData>({
@@ -30,7 +35,14 @@ export default function Login() {
 
   async function onSubmit(data: FormData){
     await signInWithEmailAndPassword(auth, data.email, data.password)
-    .then(() => {
+    .then((user) => {
+			
+			handleInfoUser({
+				uid: user.user.uid,
+				name: user.user.displayName,
+				email: data.email
+			});
+
       navigate('/dashboard', { replace: true });
       toast.success('Bem-vindo(a)');
       reset();

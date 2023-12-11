@@ -46,7 +46,7 @@ export default function AuthProvider({ children }: { children: ReactNode }){
   };
 
   return(
-    <AuthContext.Provider value={{  signed: !!user, user, handleInfoUser  }} >
+    <AuthContext.Provider value={{  signed: !!user, user, handleInfoUser }} >
       { children }
     </AuthContext.Provider>
   );
