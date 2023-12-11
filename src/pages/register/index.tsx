@@ -1,3 +1,6 @@
+import { useContext } from "react";
+import { AuthContext } from "../../contexts";
+
 import Container from "../../components/container";
 import Input from "../../components/imput";
 import logoImg from "../../assets/logo.svg";
@@ -22,6 +25,8 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 
 export default function Register() {
+	const { handleInfoUser } = useContext(AuthContext);
+
 	const navigate = useNavigate();
 
   const { register, handleSubmit, reset, formState: { errors } } = useForm<FormData>({
@@ -34,6 +39,12 @@ export default function Register() {
 		.then(async (user) => {
 			await updateProfile(user.user, {
 				displayName: data.name
+			});
+
+			handleInfoUser({
+				uid: user.user.uid,
+				name: data.name,
+				email: data.email
 			});
 
 			toast.success('Cadastrado com sucesso');
