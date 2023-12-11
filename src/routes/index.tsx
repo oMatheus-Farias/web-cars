@@ -17,9 +17,9 @@ export default function RoutesApp(){
       <Route path="/login" element={ <Login/> } />
       <Route path="/register" element={ <Register/> } />
       
-      <Route path="/cardetail" element={ <CarDetail/> } />
+      <Route path="/cardetail/:id" element={ <CarDetail/> } />
       <Route path="/dashboard" element={ <PrivateRoutes><Dashboard/></PrivateRoutes> } />
-      <Route path="/new" element={ <PrivateRoutes><New/></PrivateRoutes> } />
+      <Route path="dashboard/new" element={ <PrivateRoutes><New/></PrivateRoutes> } />
     </Routes>
   );
 };
