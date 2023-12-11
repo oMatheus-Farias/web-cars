@@ -1,4 +1,6 @@
-import { ReactNode, createContext, useState } from "react";
+import { ReactNode, createContext, useState, useEffect } from "react";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../services/firebaseConnection";
 
 type AuthContextData = {
   signed: boolean,
@@ -8,14 +10,32 @@ type AuthContextData = {
 
 interface UserProps {
   uid: string | number,
-  name: string,
-  email: string
+  name: string | null,
+  email: string | null
 };
 
 export const AuthContext = createContext({} as AuthContextData );
 
 export default function AuthProvider({ children }: { children: ReactNode }){
   const [user, setUser] = useState<UserProps | null>(null);
+
+  useEffect(() => {
+      const unsub = onAuthStateChanged(auth, (user) => {
+        if(user){
+          setUser({
+            uid: user.uid,
+            name: user?.displayName,
+            email: user?.email
+          });
+        }else{
+          setUser(null);
+        };
+      });
+
+    return () => {
+      unsub();
+    };
+  }, []);
 
   function handleInfoUser({ uid, name, email }: UserProps){
     setUser({
