@@ -1,6 +1,7 @@
 import { ChangeEvent, useContext, useState } from "react";
 import Container from "../../../components/container";
 import PanelHeader from "../../../components/panelHeader";
+import Header from "../../../components/header";
 
 import { FiUpload, FiTrash } from "react-icons/fi";
 
@@ -144,143 +145,147 @@ export default function New(){
   };
 
     return(
-      <Container>
-        <PanelHeader/>
+      <div>
+        <Header/>
 
-        <div className="w-full bg-white p-3 rounded-lg flex flex-col sm:flex-row items-center gap-2" >
-          <button className="border-2 w-48 rounded-lg flex items-center justify-center cursor-pointer border-gray-600 h-32 md:w-48" >
-            <div className="absolute cursor-pointer" >
-              <FiUpload size={30} color='#000' />
-            </div>
-            <div className="cursor-pointer" >
-              <input 
-                type="file" 
-                accept="image/*" 
-                className="opacity-0 cursor-pointer" 
-                onChange={ handleFile }
-              />
-            </div>
-          </button>
+        <Container>
+          <PanelHeader/>
 
-            { carImages.map((item) => {
-              return (
-                <div key={ item.name } className="w-full h-32 flex items-center justify-center relative" >
-                  <button className='absolute' onClick={() => handleDeleteImage(item)} >
-                    <FiTrash size={28} color='#FFF' />
-                  </button>
-                  <img
-                    src={ item.previewUrl }
-                    alt="Foto do carro"
-                    className="rounded-lg w-full h-32 object-cover"
-                  />
-                </div>
-              )
-            }) }
-        </div>
+          <div className="w-full bg-white p-3 rounded-lg flex flex-col sm:flex-row items-center gap-2" >
+            <button className="border-2 w-48 rounded-lg flex items-center justify-center cursor-pointer border-gray-600 h-32 md:w-48" >
+              <div className="absolute cursor-pointer" >
+                <FiUpload size={30} color='#000' />
+              </div>
+              <div className="cursor-pointer" >
+                <input 
+                  type="file" 
+                  accept="image/*" 
+                  className="opacity-0 cursor-pointer" 
+                  onChange={ handleFile }
+                />
+              </div>
+            </button>
 
-        <div className="w-full bg-white p-3 rounded-lg flex fle-col sm:flex-row items-center gap-2 mt-2" >
-          <form
-            className="w-full"
-            onSubmit={ handleSubmit(onSubmit) }
-          >
-            <div className="mb-3" >
-              <p className="mb-2 font-medium" >Nome do carro</p>
-              <Input
-                type='text'
-                register={ register } 
-                name='name'
-                error={ errors.name?.message }
-                placeholder="Ex: Onix 1.0..."
-              />
-            </div>
+              { carImages.map((item) => {
+                return (
+                  <div key={ item.name } className="w-full h-32 flex items-center justify-center relative" >
+                    <button className='absolute' onClick={() => handleDeleteImage(item)} >
+                      <FiTrash size={28} color='#FFF' />
+                    </button>
+                    <img
+                      src={ item.previewUrl }
+                      alt="Foto do carro"
+                      className="rounded-lg w-full h-32 object-cover"
+                    />
+                  </div>
+                )
+              }) }
+          </div>
 
+          <div className="w-full bg-white p-3 rounded-lg flex fle-col sm:flex-row items-center gap-2 mt-2" >
+            <form
+              className="w-full"
+              onSubmit={ handleSubmit(onSubmit) }
+            >
               <div className="mb-3" >
-                <p className="mb-2 font-medium" >Modelo do carro</p>
+                <p className="mb-2 font-medium" >Nome do carro</p>
                 <Input
                   type='text'
                   register={ register } 
-                  name='model'
-                  error={ errors.model?.message }
-                  placeholder="Ex: 1.0 flex PLUS MANUAL..."
+                  name='name'
+                  error={ errors.name?.message }
+                  placeholder="Ex: Onix 1.0..."
                 />
               </div>
 
-              <div className="flex w-full mb-3 flex-row items-center gap-4" >
-                <div className="w-full" >
-                  <p className="mb-2 font-medium" >Ano do carro</p>
+                <div className="mb-3" >
+                  <p className="mb-2 font-medium" >Modelo do carro</p>
                   <Input
                     type='text'
                     register={ register } 
-                    name='year'
-                    error={ errors.year?.message }
-                    placeholder="Ex: 2023/2023"
+                    name='model'
+                    error={ errors.model?.message }
+                    placeholder="Ex: 1.0 flex PLUS MANUAL..."
                   />
                 </div>
 
-                <div className="w-full" >
-                  <p className="mb-2 font-medium" >KM rodados</p>
+                <div className="flex w-full mb-3 flex-row items-center gap-4" >
+                  <div className="w-full" >
+                    <p className="mb-2 font-medium" >Ano do carro</p>
+                    <Input
+                      type='text'
+                      register={ register } 
+                      name='year'
+                      error={ errors.year?.message }
+                      placeholder="Ex: 2023/2023"
+                    />
+                  </div>
+
+                  <div className="w-full" >
+                    <p className="mb-2 font-medium" >KM rodados</p>
+                    <Input
+                      type='text'
+                      register={ register } 
+                      name='km'
+                      error={ errors.km?.message }
+                      placeholder="Ex: 120.000"
+                    />
+                  </div>
+                </div>
+
+                <div className="flex w-full mb-3 flex-row items-center gap-4" >
+                  <div className="w-full" >
+                    <p className="mb-2 font-medium" >Telefone / Whatsapp</p>
+                    <Input
+                      type='text'
+                      register={ register } 
+                      name='whatsapp'
+                      error={ errors.whatsapp?.message }
+                      placeholder="Ex: 11932321000"
+                    />
+                  </div>
+
+                  <div className="w-full" >
+                    <p className="mb-2 font-medium" >Cidade</p>
+                    <Input
+                      type='text'
+                      register={ register } 
+                      name='city'
+                      error={ errors.city?.message }
+                      placeholder="Ex: Guarulhos - SP"
+                    />
+                  </div>
+                </div>
+
+                <div className="mb-3" >
+                  <p className="mb-2 font-medium" >Preço</p>
                   <Input
                     type='text'
                     register={ register } 
-                    name='km'
-                    error={ errors.km?.message }
-                    placeholder="Ex: 120.000"
-                  />
-                </div>
-              </div>
-
-              <div className="flex w-full mb-3 flex-row items-center gap-4" >
-                <div className="w-full" >
-                  <p className="mb-2 font-medium" >Telefone / Whatsapp</p>
-                  <Input
-                    type='text'
-                    register={ register } 
-                    name='whatsapp'
-                    error={ errors.whatsapp?.message }
-                    placeholder="Ex: 11932321000"
+                    name='price'
+                    error={ errors.price?.message }
+                    placeholder="Ex: 90.000"
                   />
                 </div>
 
-                <div className="w-full" >
-                  <p className="mb-2 font-medium" >Cidade</p>
-                  <Input
-                    type='text'
-                    register={ register } 
-                    name='city'
-                    error={ errors.city?.message }
-                    placeholder="Ex: Guarulhos - SP"
+                <div className="mb-3" >
+                  <p className="mb-2 font-medium" >Descrição</p>
+                  <textarea
+                    className="border-2 w-full rounded-md h-24 px-2"
+                    { ...register('description') }
+                    name="description"
+                    id="description"
+                    placeholder="Digite a descrição completa sobre o carro..."
                   />
+                  { errors.description && <p className="mb-1 text-red-500" >{ errors.description?.message }</p> }
                 </div>
-              </div>
 
-              <div className="mb-3" >
-                <p className="mb-2 font-medium" >Preço</p>
-                <Input
-                  type='text'
-                  register={ register } 
-                  name='price'
-                  error={ errors.price?.message }
-                  placeholder="Ex: 90.000"
-                />
-              </div>
-
-              <div className="mb-3" >
-                <p className="mb-2 font-medium" >Descrição</p>
-                <textarea
-                  className="border-2 w-full rounded-md h-24 px-2"
-                  { ...register('description') }
-                  name="description"
-                  id="description"
-                  placeholder="Digite a descrição completa sobre o carro..."
-                />
-                { errors.description && <p className="mb-1 text-red-500" >{ errors.description?.message }</p> }
-              </div>
-
-              <button type="submit" className="rounded-md bg-zinc-900 text-white font-medium w-full h-10" >
-                Cadastrar
-              </button>
-          </form>
-        </div>
-      </Container>
+                <button type="submit" className="rounded-md bg-zinc-900 text-white font-medium w-full h-10" >
+                  Cadastrar
+                </button>
+            </form>
+          </div>
+        </Container>
+      </div>
     );
 };
