@@ -31,7 +31,7 @@ export default function Home() {
   const [input, setInput] = useState('');
 
   useEffect(() => {
-      loadCars();
+    loadCars();
   }, []);
 
   function loadCars(){
@@ -108,10 +108,13 @@ export default function Home() {
           <input 
             placeholder="Digite o nome do carro"
             className="w-full border-2 rounded-lg h-9 px-3 outline-none"
+            value={ input }
+            onChange={ (event) => setInput(event.target.value) }
           />
 
           <button 
             className="bg-red-500 h-9 px-8 rounded-lg text-white font-medium text-lg" 
+            onClick={ handleSearchCar }
           >   
             Buscar
           </button>
